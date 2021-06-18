@@ -1,0 +1,71 @@
+header {
+    justify-content: space-evenly;
+    background-color: #012E59;
+    color: white;
+    padding: 15px 0;
+    height: 50px;
+}
+
+header input,
+header input::after {
+    border-radius: 20px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    border: none;
+    padding: 10px 20px;
+}
+
+.div-search {
+    width: 30%;
+}
+
+#search {
+    width: 100%;
+}
+
+.logo {
+    height: 40px;
+}
+
+.item-header {
+    height: 25px;
+    margin-right: 5px;
+}
+
+.find {
+    height: 40.27px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #ffffff;
+    border-style: hidden;
+    padding: 5.5px 6px;
+}
+
+.user p {
+    font-size: 12px;
+}
+
+.user img {
+    margin-right: 15px;
+}
+
+.cart {
+    border-radius: 55px;
+    background-color: #012E59;
+    border: none;
+    transition: filter 0.2s;
+    height: 50px;
+    width: 55px;
+}
+
+#cart-length {
+    background-color: #00B4D8;
+    width: 18px;
+    height: 18px;
+    top: 0%;
+    margin: 23px;
+    position: absolute;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #012E59;
+}
