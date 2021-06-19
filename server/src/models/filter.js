@@ -1,5 +1,7 @@
 const mongoose = require('../database');
 
+const FilterDetail = require('./utils/FilterDetail');
+
 const FilterSchema = new mongoose.Schema({
     type: {
         type: Boolean,
@@ -9,7 +11,7 @@ const FilterSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    filterDetail: [{}]
+    filterDetail: [FilterDetail]
 });
 
 const Filter = mongoose.model('Filter', FilterSchema);

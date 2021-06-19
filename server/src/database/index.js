@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/jmgames', { useMongoClient: true });
+mongoose.connect('mongodb+srv://matheusjennifer:imortal99@jmgames.qqtbu.mongodb.net/test', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 mongoose.Promise = global.Promise;
 
