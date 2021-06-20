@@ -1,18 +1,16 @@
 const express = require('express');
 
+const cors = require('cors');
+
 const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-    console.log('ok');
-    res.send('ok');
-});
-
 require('./controllers/filterController')(app);
+require('./controllers/productController')(app);
 
-app.listen(8888);
+app.listen(3333);

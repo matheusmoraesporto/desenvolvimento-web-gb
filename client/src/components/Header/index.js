@@ -1,11 +1,8 @@
 import searchIcon from '../../assets/icons/search.png';
-
 import logoImg from '../../assets/logotypes/JMGames_White.png';
-
 import pacmanIcon from '../../assets/icons/pacman.png';
-
 import cartIcon from '../../assets/icons/cart.png';
-
+import React from 'react';
 import './styles.css';
 
 export function Header() {
