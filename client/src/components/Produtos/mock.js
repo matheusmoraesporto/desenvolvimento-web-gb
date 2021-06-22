@@ -1,45 +1,52 @@
-const tiposProduto = [
+let tiposProduto = [
     {
         description: 'Consoles',
-        type: 'consoles',
-        id: 1
+        type: 'Console',
+        id: 1,
+        checked: false
     },
     {
         description: 'Acessórios',
-        type: 'acessorios',
-        id: 2
+        type: 'Acessorio',
+        id: 2,
+        checked: false
     },
     {
         description: 'Jogos',
         type: 'jogos',
-        id: 3
+        id: 3,
+        checked: false
     }
 ];
 
-const marcas = [
+let marcas = [
     {
         description: 'Nintendo',
-        type: 'nintendo',
-        id: 4
+        type: 'Nintendo',
+        id: 4,
+        checked: false
     },
     {
         description: 'Playstation',
-        type: 'playstation',
-        id: 5
+        type: 'Playstation',
+        id: 5,
+        checked: false
     },
     {
         description: 'Sega',
-        type: 'sega',
-        id: 6
+        type: 'Sega',
+        id: 6,
+        checked: false
     },
     {
         description: 'Xbox',
-        type: 'xbox',
-        id: 7
+        type: 'Xbox',
+        id: 7,
+        checked: false
     }
 ];
 
-const filters = [
+let filters = [
     {
         type: 'Tipo de produtos',
         filtersDetail: tiposProduto

@@ -7,24 +7,21 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
 function App() {
-
     const [user, setUser] = useState(null);
-    
 
-    const actionLoginDataGoogle = async (u) =>{
-        let newUser ={
-           id: u.uid,
-           name: u.displayName,
-           avatar: u.photoURL
+    const actionLoginDataGoogle = async (u) => {
+        let newUser = {
+            id: u.uid,
+            name: u.displayName,
+            avatar: u.photoURL
         }
         setUser(newUser);
     }
 
     if (user === null) {
         return (
-           <Login onReceiveGoogle={actionLoginDataGoogle}/>
+            <Login onReceiveGoogle={actionLoginDataGoogle} />
         );
-
     } else {
         return (
             <BrowserRouter>
@@ -36,8 +33,6 @@ function App() {
             </BrowserRouter>
         );
     }
-
-
 }
 
 export default App;

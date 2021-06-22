@@ -5,34 +5,75 @@ import filters from './mock';
 import './styles.css';
 
 export function Produtos() {
+    const [filtersBranch, setFiltersBranch] = useState([]);
+    const [filtersType, setFiltersType] = useState([]);
     const [products, setProducts] = useState([]);
+    const [productsList, setProductsList] = useState([]);
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
         async function loadProducts() {
-            const response = await api.get('/product/list');
+            const response = await api.get('/product/home', {
+                params: {
+                    idUser: 'userdefault'
+                }
+            });
 
-            setProducts(response.data.products);
+            const { products, cart } = response.data;
+
+            setProducts(products);
+            setProductsList(products);
+            setCart(cart);
         }
 
         loadProducts();
     }, []);
 
-    const addProduct = async function (product){
-        const { id, description, img, value, branch, type, productCode } = product;
+    const defineFilter = (items, checked, id) => {
+        if (checked) {
+            items.push(id);
+        } else {
+            items = items.filter(o => o !== id);
+        }
 
-        const newProduct = {
-            id,
-            description,
-            img,
-            value,
-            branch,
-            type,
-            productCode,
-            login: 'userdefault' //TODO
+        return items;
+    };
+
+    const onCheckFilter = async (filDetail) => {
+        filDetail.checked = !filDetail.checked;
+
+        const { checked, type } = filDetail;
+        const property = ['Console', 'Acessorio', 'Jogo'].includes(type) ? 'type' : 'branch';
+
+        let itemsType = filtersType,
+            itemsBranch = filtersBranch;
+
+        if (property === 'type') {
+            itemsType = defineFilter(filtersType, checked, type);
+            setFiltersType(itemsType);
+        }
+        else {
+            itemsBranch = defineFilter(filtersBranch, checked, type);
+            setFiltersBranch(itemsBranch);
+        }
+
+        const productsFiltered = products.filter(o =>
+            (itemsType.length === 0 || itemsType.includes(o.type)) &&
+            (itemsBranch.length === 0 || itemsBranch.includes(o.branch)));
+
+        setProductsList(productsFiltered);
+    };
+
+    const addProduct = async function (productSelected) {
+        const { id } = productSelected;
+
+        const product = {
+            idProduct: id,
+            idUser: 'userdefault',
+            quantity: 1
         };
 
-        const newCart = await api.post('/cart/add', newProduct);
+        const newCart = await api.post('/product/add', { product });
 
         setCart(newCart);
     }
@@ -44,7 +85,7 @@ export function Produtos() {
                     <div key={filt.type}>
                         <h4>{filt.type}</h4>
                         {filt.filtersDetail.map(filDetail => (
-                            <div className="flex-row" key={filDetail.id}>
+                            <div className="flex-row" key={filDetail.id} onChange={() => onCheckFilter(filDetail)}>
                                 <input type="checkbox" name={filDetail.type} id={filDetail.type} className="filters-type-product" />
                                 <label htmlFor={filDetail.type}>{filDetail.description}</label>
                             </div>
@@ -54,7 +95,7 @@ export function Produtos() {
             </div>
 
             <ul className="products flex-wrap">
-                {products.map(product => (
+                {productsList.map(product => (
                     <li key={product.id} className="card-products filter-drop-shadow">
                         <img src={product.img} alt={product.description} className="products-images" />
 
@@ -70,6 +111,7 @@ export function Produtos() {
                     </li>
                 ))}
             </ul>
+            
             <button
                 id="gotop"
                 className="cursor-pointer"
