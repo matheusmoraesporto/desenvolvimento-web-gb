@@ -18,7 +18,7 @@ export function Produtos() {
         loadProducts();
     }, []);
 
-    const addProduct = (product) => {
+    const addProduct = async function (product){
         const { id, description, img, value, branch, type, productCode } = product;
 
         const newProduct = {

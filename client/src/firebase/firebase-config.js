@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     apiKey: "AIzaSyDRsBdriauu6yvfvlIze1Moy62TmmHlYNo",
     authDomain: "jmgames-189ce.firebaseapp.com",

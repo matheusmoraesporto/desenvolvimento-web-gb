@@ -5,7 +5,7 @@ import cartIcon from '../../assets/icons/cart.png';
 import React from 'react';
 import './styles.css';
 
-export function Header() {
+export function Header(props) {
     return (
         <header className="flex-row">
             <img src={logoImg} alt="JM Games" className="logo cursor-pointer" />
@@ -19,10 +19,10 @@ export function Header() {
             </div>
 
             <div className="user flex-row">
-                <img src={pacmanIcon} alt="Usuário" className="item-header" />
+                <img id="avatar" src={props.user.avatar} alt="Usuário" className="item-header" />
                 <div>
-                    <p>Bem vindo(a)</p>
-                    <p>AQUI VAI TER QUE SER O NOME DO USUÁRIO LOGADO</p>
+                    <p>Bem vindo(a) ,</p>
+                    <p>{props.user.name}</p>
                 </div>
             </div>
 

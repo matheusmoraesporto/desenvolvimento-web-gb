@@ -32,6 +32,11 @@ header input::after {
     margin-right: 5px;
 }
 
+#avatar {
+    height: 30px;
+    border-radius: 15px;
+}
+
 .find {
     height: 40.27px;
     border-bottom-right-radius: 20px;

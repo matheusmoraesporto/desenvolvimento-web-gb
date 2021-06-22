@@ -1,34 +1,38 @@
-import React from 'react';
-import { Header } from './components/Header';
-import { Banner } from './components/Banner';
-import { Produtos } from './components/Produtos'
-import { Footer } from './components/Footer';
-import { Login } from './components/Login';
+import React, { useState } from 'react';
+import Login from './pages/login/login'
 import './global.css';
-import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom'
-
 import Routes from './routes';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 
 function App() {
-    const [user, setUser] = useState({
-        id: 1,
-        name: 'R'
-    });
+
+    const [user, setUser] = useState(null);
+    
+
+    const actionLoginDataGoogle = async (u) =>{
+        let newUser ={
+           id: u.uid,
+           name: u.displayName,
+           avatar: u.photoURL
+        }
+        setUser(newUser);
+    }
 
     if (user === null) {
         return (
-            <Login />
+           <Login onReceiveGoogle={actionLoginDataGoogle}/>
         );
 
     } else {
         return (
             <BrowserRouter>
-                <Header />
-                <Banner />
-                <Produtos />
-                <Footer />
+                <Header user={user} />
+
                 <Routes />
+
+                <Footer />
             </BrowserRouter>
         );
     }
