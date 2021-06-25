@@ -1,14 +1,16 @@
 import searchIcon from '../../assets/icons/search.png';
 import logoImg from '../../assets/logotypes/JMGames_White.png';
-import pacmanIcon from '../../assets/icons/pacman.png';
 import cartIcon from '../../assets/icons/cart.png';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './styles.css';
 
 export function Header(props) {
     return (
         <header className="flex-row">
-            <img src={logoImg} alt="JM Games" className="logo cursor-pointer" />
+            <Link to="/home">
+                <img src={logoImg} alt="JM Games" className="logo cursor-pointer" />
+            </Link>
 
             <div className="flex-row div-search">
                 <input type="text" name="search" id="search" placeholder="Pesquisar" />
@@ -26,10 +28,12 @@ export function Header(props) {
                 </div>
             </div>
 
-            <button id="btn-cart" className="cart cursor-pointer flex-row">
-                <img src={cartIcon} alt="Carrinho" className="item-header" />
-                <span id="cart-length" hidden></span>
-            </button>
+            <Link to="/cart">
+                <button id="btn-cart" className="cart cursor-pointer flex-row">
+                    <img src={cartIcon} alt="Carrinho" className="item-header" />
+                    <span id="cart-length" hidden></span>
+                </button>
+            </Link>
         </header>
     );
 }

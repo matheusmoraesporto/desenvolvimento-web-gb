@@ -4,7 +4,7 @@ import api from '../service/api';
 import filters from './mock';
 import './styles.css';
 
-export function Produtos() {
+export function Produtos({ user }) {
     const [filtersBranch, setFiltersBranch] = useState([]);
     const [filtersType, setFiltersType] = useState([]);
     const [products, setProducts] = useState([]);
@@ -15,7 +15,7 @@ export function Produtos() {
         async function loadProducts() {
             const response = await api.get('/product/home', {
                 params: {
-                    idUser: 'userdefault'
+                    idUser: user.id
                 }
             });
 
@@ -69,7 +69,7 @@ export function Produtos() {
 
         const product = {
             idProduct: id,
-            idUser: 'userdefault',
+            idUser: user.id,
             quantity: 1
         };
 
@@ -111,7 +111,7 @@ export function Produtos() {
                     </li>
                 ))}
             </ul>
-            
+
             <button
                 id="gotop"
                 className="cursor-pointer"

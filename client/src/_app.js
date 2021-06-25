@@ -5,8 +5,10 @@ import { BrowserRouter } from 'react-router-dom'
 import Routes from './routes';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import api from './components/service/api';
 
 function App() {
+    const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
 
     const actionLoginDataGoogle = async (u) => {
@@ -22,12 +24,23 @@ function App() {
         return (
             <Login onReceiveGoogle={actionLoginDataGoogle} />
         );
-    } else {
+    }
+    else {
+        if (!authenticated) {
+            api.post('user/auth', { user })
+                .then(response => {
+                    const { user } = response.data;
+
+                    setUser(user);
+                    setAuthenticated(true);
+                });
+        }
+
         return (
             <BrowserRouter>
                 <Header user={user} />
 
-                <Routes />
+                <Routes user={user} />
 
                 <Footer />
             </BrowserRouter>

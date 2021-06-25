@@ -2,12 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const Cart = require('../models/cart');
-const Product = require('../models/Product');
+const Product = require('../models/product');
 
 router.post('/register', async (req, res) => {
     try {
-        console.log(req.body);
-
         const product = await Product.create(req.body);
 
         return res.send({ filter: product });
@@ -61,18 +59,18 @@ router.post('/add', async (req, res) => {
 
         const { product } = req.body;
 
-        const { idUser } = product;
+        const { idProduct, idUser } = product;
 
         const cartItens = await Cart
             .find()
             .where('idUser').equals(idUser)
-            .where('idProduct').equals(product.idProduct);
+            .where('idProduct').equals(idProduct);
 
         if (cartItens.length > 0) {
             let productInCart = cartItens[0];
 
             productInCart.quantity++;
-            productInCart.save(); // .remove() para deletar
+            await productInCart.save(); // .remove() para deletar
         }
         else {
             await Cart.create(product);
@@ -91,6 +89,14 @@ router.post('/add', async (req, res) => {
 
         return res.status(400).send({ error: 'Error on add items into the cart' })
     }
+});
+
+router.get('cart', async (req, res) => {
+    const { idUser } = req.body;
+
+    const cartItens = await Cart
+        .find()
+        .where('idUser').equals(idUser);
 });
 
 module.exports = app => app.use('/product', router);

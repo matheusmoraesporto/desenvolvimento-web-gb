@@ -1,13 +1,12 @@
 import React from 'react';
+import { Banner } from '../../components/Banner';
 import { Produtos } from '../../components/Produtos';
 
-
-export function Home(){
-
-    return(
+export function Home({ user }) {
+    return (
         <div>
-        <Produtos/>
+            <Banner />
+            <Produtos user={user} />
         </div>
     );
 }
-

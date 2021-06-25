@@ -1,12 +1,9 @@
 import React from 'react';
+import { Cart } from '../../components/Cart';
 
-
-export function Cart(){
-
-    return(
-        <div>
-        desenvolvimento da tela aqui
-        </div>
+export function CartPage() {
+    return (
+        <Cart />
     );
 }
 
