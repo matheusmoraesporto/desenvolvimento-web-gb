@@ -15,7 +15,7 @@ export function Header(props) {
     
     return (
         <header className="flex-row">
-            <Link to="/home">
+            <Link to="/">
                 <img src={logoImg} alt="JM Games" className="logo cursor-pointer" />
             </Link>
 

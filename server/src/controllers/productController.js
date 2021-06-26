@@ -4,30 +4,6 @@ const router = express.Router();
 const Cart = require('../models/cart');
 const Product = require('../models/product');
 
-router.post('/register', async (req, res) => {
-    try {
-        const product = await Product.create(req.body);
-
-        return res.send({ filter: product });
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(400).send({ error: err });
-    }
-});
-
-router.get('/list', async (req, res) => {
-    try {
-        const products = await Product.find();
-
-        return res.json({ products });
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(400).send({ error: err });
-    }
-});
-
 router.get('/home', async (req, res) => {
     try {
         const { idUser } = req.query;
@@ -87,22 +63,23 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('cart', async (req, res) => {
+
+router.get('/cart', async (req, res) => {
     try {
-        const { idUser } = req.body;
+        const { idUser } = req.query;
 
         const cartItens = await Cart
             .find()
             .where('idUser').equals(idUser);
 
-        const idsProductsInCart = cartIntes.map(o => o.idProduct);
+        const idsProductsInCart = cartItens.map(o => o.idProduct);
 
         let products = await Product.find();
 
-        products = products.filter(o => idsProduct.includes(o.id));
+        products = products.filter(o => idsProductsInCart.includes(o.id));
 
         const productsCart = products.map(o => {
-            let dataCartItem = cartItens.filter(o => o.idProduct === o.id)[0];
+            let dataCartItem = cartItens.filter(x => x.idProduct === o.id)[0];
 
             return {
                 description: o.description,
@@ -115,9 +92,10 @@ router.get('cart', async (req, res) => {
             };
         });
 
-        res.json({ productsCart });
+        res.json({ products: productsCart });
     }
     catch (err) {
+        console.log(err);
         return res.status(400).send({ error: err });
     }
 });

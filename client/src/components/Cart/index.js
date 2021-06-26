@@ -15,10 +15,10 @@ export function Cart({ user }) {
                     idUser: user.id
                 }
             });
-
+            
             const { cartProducts } = response.data;
-
-            setProducts(cartProducts);
+            
+            setProducts(cartProducts || []);
         }
 
         loadProductsCart();
