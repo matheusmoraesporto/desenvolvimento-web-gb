@@ -12,8 +12,7 @@ router.post('/register', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-
-        return res.status(400).send({ error: 'Error on save entity' });
+        return res.status(400).send({ error: err });
     }
 });
 
@@ -25,8 +24,7 @@ router.get('/list', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-
-        return res.status(400).send({ error: 'Error on list products' });
+        return res.status(400).send({ error: err });
     }
 });
 
@@ -48,8 +46,7 @@ router.get('/home', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-
-        return res.status(400).send({ error: 'Error on get products and cart' });
+        return res.status(400).send({ error: err });
     }
 });
 
@@ -86,17 +83,43 @@ router.post('/add', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-
-        return res.status(400).send({ error: 'Error on add items into the cart' })
+        return res.status(400).send({ error: err });
     }
 });
 
 router.get('cart', async (req, res) => {
-    const { idUser } = req.body;
+    try {
+        const { idUser } = req.body;
 
-    const cartItens = await Cart
-        .find()
-        .where('idUser').equals(idUser);
+        const cartItens = await Cart
+            .find()
+            .where('idUser').equals(idUser);
+
+        const idsProductsInCart = cartIntes.map(o => o.idProduct);
+
+        let products = await Product.find();
+
+        products = products.filter(o => idsProduct.includes(o.id));
+
+        const productsCart = products.map(o => {
+            let dataCartItem = cartItens.filter(o => o.idProduct === o.id)[0];
+
+            return {
+                description: o.description,
+                img: o.img,
+                value: o.value,
+                productCode: o.productCode,
+                idProduct: o.id,
+                idUser: dataCartItem.idUser,
+                quantity: dataCartItem.quantity
+            };
+        });
+
+        res.json({ productsCart });
+    }
+    catch (err) {
+        return res.status(400).send({ error: err });
+    }
 });
 
 module.exports = app => app.use('/product', router);

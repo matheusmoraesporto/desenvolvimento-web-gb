@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import trashImg from '../../assets/icons/trash.svg';
 import MarioEmptyCart from '../../assets/backgrounds/cart_empty.jpg';
 import api from '../service/api';
@@ -15,9 +16,9 @@ export function Cart({ user }) {
                 }
             });
 
-            const { products } = response.data;
+            const { cartProducts } = response.data;
 
-            setProducts(products);
+            setProducts(cartProducts);
         }
 
         loadProductsCart();
@@ -28,18 +29,20 @@ export function Cart({ user }) {
             {products.length <= 0
                 ?
                 (<div className="empty-cart-container">
-                    <span class="spn-empty-cart">O carrinho está vazio! Volte a tela inicial e adicione um produto.</span>
+                    <span className="spn-empty-cart">O carrinho está vazio! Volte a tela inicial e adicione um produto.</span>
 
                     <img src={MarioEmptyCart} alt="Carrinho vazio" />
 
-                    <button type="submit" id="continue-buying" class="cursor-pointer btn">
-                        Continue comprando
-                    </button>
+                    <Link to="/">
+                        <button type="submit" id="continue-buying" className="cursor-pointer btn">
+                            Continue comprando
+                        </button>
+                    </Link>
                 </div>)
                 :
-                (<div class="content-table">
+                (<div className="content-table">
                     <table>
-                        <thead class="head-order">
+                        <thead className="head-order">
                             <tr>
                                 <th>Produto</th>
                                 <th>Preço unitário</th>
@@ -63,13 +66,7 @@ export function Cart({ user }) {
                                         </div>
                                     </td>
                                     <td className="font-bold">R$ {product.value}</td>
-                                    <td className="font-bold">
-                                        <div className="flex-row justify-content-center">
-                                            <button class="cursor-pointer bkg-light-blue btn-decrement">-</button>
-                                            <p className="bkg-light-blue">{product.quantity}</p>
-                                            <button className="cursor-pointer bkg-light-blue btn-increment">+</button>
-                                        </div>
-                                    </td>
+                                    <td className="font-bold">{product.quantity}</td>
                                     <td className="font-bold">R$ {product.value * product.quantity}</td>
                                     <td>
                                         <img className="icon-20 cursor-pointer delete" src={trashImg} alt="Remover item do carrinho" />
