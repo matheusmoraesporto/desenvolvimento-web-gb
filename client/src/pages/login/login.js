@@ -5,7 +5,7 @@ import { IoGameController } from "react-icons/io5";
 import { BiArrowBack } from "react-icons/bi";
 import './styles.css'
 import Logo from '../../assets/logotypes/JMGames_White.png'
-import { AiOutlineGoogle } from 'react-icons/ai'
+import { FcGoogle } from 'react-icons/fc'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default ({ onReceiveGoogle }) => {
@@ -62,7 +62,7 @@ export default ({ onReceiveGoogle }) => {
                         <div className="login-box">
 
                             <button className="button-config" id="google" onClick={actionLoginGoogle}>
-                                <AiOutlineGoogle />
+                                <FcGoogle />
                                 <p id="text-button">Entre com o Google</p>
                             </button>
 

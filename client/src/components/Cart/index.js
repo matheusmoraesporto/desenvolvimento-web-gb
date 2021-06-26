@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../service/api';
+import apiCorreios from '../service/api-correio';
 import boletoImg from '../../assets/icons/boleto.png';
 import cashImg from '../../assets/icons/cash.png';
 import locationImg from '../../assets/icons/location.png';
@@ -9,9 +10,11 @@ import protectedImg from '../../assets/logotypes/protected.png';
 import trashImg from '../../assets/icons/trash.svg';
 import './styles.css';
 
+
 export function Cart({ user }) {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState([]);
+    const [cep, setCep] = useState('');
 
     useEffect(() => {
         async function loadProductsCart() {
@@ -46,6 +49,20 @@ export function Cart({ user }) {
         const { products } = response.data;
 
         setProducts(products);
+    };
+
+    const changeCep = async (value) => {
+        // await setCep(value); 
+        getCep(value);
+    };
+
+    const getCep = async (cep) => {
+
+        if(cep) {
+            const response = await apiCorreios.get( `/${cep}/json/`);
+            
+            console.log(response.data);
+        } 
     };
 
     return (
@@ -118,7 +135,14 @@ export function Cart({ user }) {
 
                             <div className="div-input-form">
                                 <label for="cep">CEP:</label>
-                                <input className="input-form" type="text" name="cep" id="cep" placeholder="xxxxx-xxx" />
+                                <input 
+                                className="input-form" 
+                                type="text" 
+                                name="cep" 
+                                id="cep" 
+                                placeholder="xxxxx-xxx"
+                                value={cep}
+                                onChange={(e) => changeCep(e.target.value)} />
                             </div>
 
                             <div className="div-input-form">
