@@ -21,7 +21,7 @@ router.post('/auth', async (req, res) => {
         }
     }
     catch (err) {
-        console; log(err);
+        console.log(err);
 
         return res.status(400).send({ error: 'Error on try to login' });
     }
