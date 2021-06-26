@@ -1,12 +1,12 @@
 .content-table {
-    width: 80%;
-    margin: 20px;
+    margin: 20px 10%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 table {
+    align-content: center;
     width: 100%;
     text-align: center;
     background-color: #C1E7F0;
@@ -86,17 +86,16 @@ td .bkg-light-blue {
 }
 
 .forms {
-    justify-content: space-between;
+    width: 100%;
     margin-top: 30px;
     align-items: stretch;
-    max-width: 100%;
 }
 
 .forms-detail {
+    width: 100%;
     border-radius: 5px;
     background-color: #ffffff;
     padding: 20px;
-    width: 30%;
 }
 
 .forms-detail input,

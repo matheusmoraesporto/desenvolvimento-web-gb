@@ -4,6 +4,35 @@ const router = express.Router();
 const Cart = require('../models/cart');
 const Product = require('../models/product');
 
+const getProductsInCart = async (idUser) => {
+    const cartItens = await Cart
+        .find()
+        .where('idUser').equals(idUser);
+
+    const idsProductsInCart = cartItens.map(o => o.idProduct);
+
+    let products = await Product.find();
+
+    products = products.filter(o => idsProductsInCart.includes(o.id));
+
+    const productsCart = products.map(o => {
+        let dataCartItem = cartItens.filter(x => x.idProduct === o.id)[0];
+
+        return {
+            description: o.description,
+            img: o.img,
+            value: o.value,
+            productCode: o.productCode,
+            id: dataCartItem.id,
+            idProduct: o.id,
+            idUser: dataCartItem.idUser,
+            quantity: dataCartItem.quantity
+        };
+    });
+
+    return productsCart;
+};
+
 router.get('/home', async (req, res) => {
     try {
         const { idUser } = req.query;
@@ -43,7 +72,7 @@ router.post('/add', async (req, res) => {
             let productInCart = cartItens[0];
 
             productInCart.quantity++;
-            await productInCart.save(); // .remove() para deletar
+            await productInCart.save();
         }
         else {
             await Cart.create(product);
@@ -68,31 +97,33 @@ router.get('/cart', async (req, res) => {
     try {
         const { idUser } = req.query;
 
-        const cartItens = await Cart
-            .find()
-            .where('idUser').equals(idUser);
-
-        const idsProductsInCart = cartItens.map(o => o.idProduct);
-
-        let products = await Product.find();
-
-        products = products.filter(o => idsProductsInCart.includes(o.id));
-
-        const productsCart = products.map(o => {
-            let dataCartItem = cartItens.filter(x => x.idProduct === o.id)[0];
-
-            return {
-                description: o.description,
-                img: o.img,
-                value: o.value,
-                productCode: o.productCode,
-                idProduct: o.id,
-                idUser: dataCartItem.idUser,
-                quantity: dataCartItem.quantity
-            };
-        });
+        const productsCart = await getProductsInCart(idUser);
 
         res.json({ products: productsCart });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).send({ error: err });
+    }
+});
+
+router.post('/remove', async (req, res) => {
+    try {
+        const { idUser, idProduct } = req.body.params;
+
+        const productInCart = await Cart
+            .find()
+            .where('idProduct').equals(idProduct)
+            .where('idUser').equals(idUser);
+
+        if (productInCart.length === 1) {
+            await productInCart[0].remove();
+        }
+
+        const productsCart = await getProductsInCart(idUser);
+
+        res.json({ products: productsCart });
+
     }
     catch (err) {
         console.log(err);
