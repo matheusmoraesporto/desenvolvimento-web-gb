@@ -30,7 +30,7 @@ export default ({ onReceiveGoogle }) => {
                         <div className="signup-box">
 
                             <div className="create">
-                                <a href="/"><BiArrowBack /></a>
+                                <a href="/homes"><BiArrowBack /></a>
                                 <p id="create-account"> Crie sua conta</p>
                             </div>
                             <form action="submit" className="login-form">

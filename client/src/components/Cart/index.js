@@ -72,7 +72,7 @@ export function Cart({ user }) {
                                     </td>
                                     <td className="font-bold">R$ {product.value * product.quantity}</td>
                                     <td>
-                                        <img className="icon-20 cursor-pointer delete" src={trashImg} />
+                                        <img className="icon-20 cursor-pointer delete" src={trashImg} alt="Remover item do carrinho" />
                                     </td>
                                 </tr>
                             ))}

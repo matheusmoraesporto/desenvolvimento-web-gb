@@ -2,10 +2,17 @@ import searchIcon from '../../assets/icons/search.png';
 import logoImg from '../../assets/logotypes/JMGames_White.png';
 import cartIcon from '../../assets/icons/cart.png';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
 
 export function Header(props) {
+    const history = useHistory();
+
+    const logout = () => {
+        localStorage.clear();
+        history.go(0)
+    };
+    
     return (
         <header className="flex-row">
             <Link to="/home">
@@ -34,6 +41,10 @@ export function Header(props) {
                     <span id="cart-length" hidden></span>
                 </button>
             </Link>
+            <button onClick={()=> logout()} id="btn-cart" className="cart cursor-pointer flex-row">
+            <img src={cartIcon} alt="Carrinho" className="item-header" />
+                    <span id="cart-length" hidden>Sair</span>
+                </button>
         </header>
     );
 }

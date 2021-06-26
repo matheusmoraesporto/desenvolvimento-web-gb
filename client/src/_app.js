@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from './pages/login/login'
 import './global.css';
 import { BrowserRouter } from 'react-router-dom'
 import Routes from './routes';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
 import api from './components/service/api';
 
 function App() {
+    const userCashed = localStorage['user'];
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
 
@@ -17,12 +16,20 @@ function App() {
             name: u.displayName,
             avatar: u.photoURL
         }
-        setUser(newUser);
-    }
 
-    if (user === null) {
+        setUser(newUser);
+        localStorage.setItem('user', JSON.stringify(newUser));
+    }
+    
+    useEffect(() => {
+        if (userCashed) {
+            setUser(JSON.parse(userCashed));
+        }
+    }, []);
+
+    if (!user) {
         return (
-            <Login onReceiveGoogle={actionLoginDataGoogle} />
+            <Login onReceiveGoogle={actionLoginDataGoogle}/>
         );
     }
     else {
@@ -38,11 +45,7 @@ function App() {
 
         return (
             <BrowserRouter>
-                <Header user={user} />
-
                 <Routes user={user} />
-
-                <Footer />
             </BrowserRouter>
         );
     }
