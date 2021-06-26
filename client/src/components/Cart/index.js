@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import trashImg from '../../assets/icons/trash.svg';
-import MarioEmptyCart from '../../assets/backgrounds/cart_empty.jpg';
+import MarioEmptyCart from '../../assets/backgrounds/emptycart.jpg';
 import api from '../service/api';
 import './styles.css';
 

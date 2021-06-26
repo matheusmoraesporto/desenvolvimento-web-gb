@@ -74,3 +74,8 @@ header input::after {
     border-style: solid;
     border-color: #012E59;
 }
+
+.logout {
+    font-size: 25px;
+    color: #ffffff;
+}

@@ -3,7 +3,10 @@ import logoImg from '../../assets/logotypes/JMGames_White.png';
 import cartIcon from '../../assets/icons/cart.png';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { RiLogoutCircleLine } from 'react-icons/ri';
 import './styles.css';
+
+
 
 export function Header(props) {
     const history = useHistory();
@@ -41,10 +44,10 @@ export function Header(props) {
                     <span id="cart-length" hidden></span>
                 </button>
             </Link>
+            
             <button onClick={()=> logout()} id="btn-cart" className="cart cursor-pointer flex-row">
-            <img src={cartIcon} alt="Carrinho" className="item-header" />
-                    <span id="cart-length" hidden>Sair</span>
-                </button>
+                <RiLogoutCircleLine className="logout" />
+            </button>
         </header>
     );
 }

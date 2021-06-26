@@ -218,13 +218,14 @@ select:-webkit-autofill {
     -webkit-text-fill-color: #262626 !important;
 }
 
-.empty-cart-none {
+.empty-cart-container {
     display: flex;
     flex-direction: column;
+    align-content: center;
     align-items: center;
 }
 
-.empty-cart-none img {
-    height: 324px;
-    margin: 0 0 -43px;
+.empty-cart-container img {
+    height: 313px;
+    margin: 14px 0 -32px 0;
 }
