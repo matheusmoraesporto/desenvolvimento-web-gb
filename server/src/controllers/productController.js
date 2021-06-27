@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Cart = require('../models/cart');
+const Order = require('../models/order');
 const Product = require('../models/product');
 
 const getProductsInCart = async (idUser) => {
@@ -39,9 +40,7 @@ router.get('/home', async (req, res) => {
 
         const products = await Product
             .find()
-            .sort({
-                value: -1
-            });
+            .sort({ value: -1 });
 
         const cart = await Cart
             .find()
@@ -128,6 +127,57 @@ router.post('/remove', async (req, res) => {
     catch (err) {
         console.log(err);
         return res.status(400).send({ error: err });
+    }
+});
+
+router.post('/finish', async (req, res) => {
+    try {
+        const { idUser, total } = req.body.params;
+
+        const itensInCart = await Cart
+            .find()
+            .where('idUser').equals(idUser);
+
+        itensInCart.forEach(i => i.remove());
+
+        let bankSlip = '';
+
+        for (let index = 0; index < 48; index++) {
+            bankSlip += Math.floor(Math.random() * 10);
+        }
+
+        const newOrder = {
+            bankSlip,
+            idUser,
+            total,
+            numOrder: parseInt(Math.random() * 100000).toString(),
+            dateFinish: new Date()
+        };
+
+        await Order.create(newOrder);
+
+        res.status(200).send({});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(400).send({ error: err });
+    }
+});
+
+router.get('/order', async (req, res) => {
+    try {
+        const { idUser } = req.query;
+
+        const orders = await Order
+            .find()
+            .sort({ dateFinish: -1 })
+            .where('idUser').equals(idUser);
+
+        res.send({ order: orders[0] });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).send({ error: err });
     }
 });
 

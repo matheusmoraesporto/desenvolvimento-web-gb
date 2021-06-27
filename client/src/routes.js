@@ -5,7 +5,7 @@ import { Banner } from './components/Banner';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Cart } from './components/Cart';
-import { OrderConclusion } from './pages/order-conclusion/order-conclusion'
+import { Finish } from './components/Finish';
 
 function Routes({ user }) {
     return (
@@ -21,9 +21,9 @@ function Routes({ user }) {
                 <Cart user={user} />
                 <Footer />
             </Route>
-            <Route exact path="/order-conclusion">
+            <Route exact path="/finish">
                 <Header user={user} />
-                <OrderConclusion user={user} />
+                <Finish user={user} />
                 <Footer />
             </Route>
         </Switch>

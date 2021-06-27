@@ -1,0 +1,62 @@
+.card-conclusion {
+    justify-content: center;
+    margin: 65px;
+    line-height: 35px;
+    display: flex;
+    border-radius: 5px;
+    flex-direction: column;
+    background: linear-gradient( 0deg, rgba(237, 237, 237, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    padding: 30px 10% 30px 10%;
+    filter: drop-shadow(0 0 4px #C9C9C9);
+}
+
+.product-resume {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.resume,
+.conclusion {
+    flex-direction: column;
+}
+
+.conclusion h3 {
+    width: 280px;
+}
+
+.conclusion img {
+    width: 45px;
+    margin: 20px 0 0 110px;
+}
+
+.payment {
+    padding: 25px 5px 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.payment button {
+    width: 275px;
+}
+
+.payment p {
+    margin-top: 15px;
+}
+
+.payment img {
+    width: 16px;
+    margin-left: 5px;
+}
+
+#input-boleto {
+    border-radius: 5px;
+    padding: 10px;
+    border: solid;
+}
+
+.buttons-boleto {
+    display: flex;
+    flex-direction: column;
+}
