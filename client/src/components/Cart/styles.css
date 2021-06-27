@@ -139,6 +139,10 @@ legend {
     width: 100%;
 }
 
+.input-90 {
+    width: 90%;
+}
+
 .input-70 {
     width: 70%;
 }
@@ -227,4 +231,8 @@ select:-webkit-autofill {
 .empty-cart-container img {
     height: 313px;
     margin: 14px 0 -32px 0;
+}
+
+.btn-buscar-cep {
+    margin-top: 18px;;
 }

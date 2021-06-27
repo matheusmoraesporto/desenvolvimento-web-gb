@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import api from '../service/api';
 import apiCorreios from '../service/api-correio';
 import boletoImg from '../../assets/icons/boleto.png';
@@ -10,11 +10,19 @@ import protectedImg from '../../assets/logotypes/protected.png';
 import trashImg from '../../assets/icons/trash.svg';
 import './styles.css';
 
-
 export function Cart({ user }) {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState([]);
+
+    // Campos do form
     const [cep, setCep] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [bairro, setBairro] = useState('');
+    const [complemento, setComplemento] = useState('');
+    const [uf, setUf] = useState('');
+    const [cidade, setCidade] = useState('');
+
+    const history = useHistory();
 
     useEffect(() => {
         async function loadProductsCart() {
@@ -51,18 +59,73 @@ export function Cart({ user }) {
         setProducts(products);
     };
 
-    const changeCep = async (value) => {
-        // await setCep(value); 
-        getCep(value);
+    const getCep = async (cep) => {
+        if (cep) {
+            const response = await apiCorreios.get(`/${cep}/json/`);
+            const { data } = response;
+
+            if (!data.erro) {
+                const {
+                    bairro,
+                    complemento,
+                    localidade,
+                    logradouro,
+                    uf
+                } = data;
+
+                setBairro(bairro);
+                setCidade(localidade);
+                setComplemento(complemento);
+                setEndereco(logradouro);
+                setUf(uf);
+            }
+            else {
+                resetFieldsAddress();
+            }
+        }
     };
 
-    const getCep = async (cep) => {
+    const resetFieldsAddress = () => {
+        setBairro('');
+        setCidade('');
+        setComplemento('');
+        setEndereco('');
+        setBairro('');
+        setUf('');
+    };
 
-        if(cep) {
-            const response = await apiCorreios.get( `/${cep}/json/`);
-            
-            console.log(response.data);
-        } 
+    const changeCep = (cep) => {
+        if (cep) {
+            // Obtém somente os números, para obter a quantidade máxima que pode ser informada
+            const cepOnlyNumber = cep.replace(/[^\d]+/g, '').slice(0, 8);
+            cep = cepOnlyNumber.match(/.{1,5}/g).join("-");
+        }
+
+        if (cep.length <= 0) {
+            resetFieldsAddress();
+        }
+
+        setCep(cep);
+    };
+
+    const finish = async () => {
+        const response = await api.post('/product/finish', {
+            params: {
+                idUser: user.id,
+                total
+            }
+        });
+
+        const { status } = response;
+
+        if (status === 200) {
+            history.push('/finish');
+        }
+        else {
+            const { error } = response.data;
+
+            alert(error);
+        }
     };
 
     return (
@@ -133,44 +196,91 @@ export function Cart({ user }) {
                                 <h4>Entrega</h4>
                             </div>
 
-                            <div className="div-input-form">
-                                <label for="cep">CEP:</label>
-                                <input 
-                                className="input-form" 
-                                type="text" 
-                                name="cep" 
-                                id="cep" 
-                                placeholder="xxxxx-xxx"
-                                value={cep}
-                                onChange={(e) => changeCep(e.target.value)} />
+                            <div className="flex-row div-input-form">
+                                <div className="input-90">
+                                    <label htmlFor="cep">CEP:</label>
+                                    <input
+                                        className="input-form input-form-margin-right"
+                                        type="text"
+                                        name="cep"
+                                        id="cep"
+                                        placeholder="xxxxx-xxx"
+                                        value={cep}
+                                        onChange={(e) => changeCep(e.target.value)} />
+                                </div>
+
+                                <div>
+                                    <button
+                                        type="submit"
+                                        onClick={() => getCep(cep)}
+                                        className="btn btn-buscar-cep cursor-pointer">
+                                        Buscar
+                                    </button>
+                                </div>
                             </div>
 
                             <div className="div-input-form">
-                                <label for="address">Endereço:</label>
-                                <input className="input-form" type="text" name="address" id="address" disabled={true} />
+                                <label htmlFor="address">Endereço:</label>
+                                <input
+                                    className="input-form"
+                                    type="text"
+                                    name="address"
+                                    id="address"
+                                    disabled={true}
+                                    value={endereco}
+                                />
                             </div>
 
                             <div className="flex-row div-input-form">
                                 <div className="input-50">
-                                    <label for="number">Número:</label>
-                                    <input className="input-form input-form-margin-right" type="number" name="number" id="number" min="1" disabled={true} />
+                                    <label htmlFor="bairro">Bairro:</label>
+                                    <input
+                                        className="input-form input-form-margin-right"
+                                        type="text"
+                                        name="bairro"
+                                        id="bairro"
+                                        min="1"
+                                        disabled={true}
+                                        value={bairro}
+                                    />
                                 </div>
 
                                 <div className="input-50 div-input-form">
-                                    <label for="complement">Complemento:</label>
-                                    <input className="input-form" type="text" name="complement" id="complement" disabled={true} />
+                                    <label htmlFor="complement">Complemento:</label>
+                                    <input
+                                        className="input-form"
+                                        type="text"
+                                        name="complement"
+                                        id="complement"
+                                        disabled={true}
+                                        value={complemento}
+                                    />
                                 </div>
                             </div>
 
                             <div className="flex-row div-input-form">
                                 <div className="input-50">
-                                    <label for="uf">UF:</label>
-                                    <input className="input-form input-form-margin-right" type="text" name="uf" id="uf" disabled={true} />
+                                    <label htmlFor="uf">UF:</label>
+                                    <input
+                                        className="input-form input-form-margin-right"
+                                        type="text"
+                                        name="uf"
+                                        id="uf"
+                                        disabled={true}
+                                        value={uf}
+                                    />
                                 </div>
 
                                 <div className="input-50">
-                                    <label for="city">Cidade:</label>
-                                    <input className="input-form" type="text" name="city" id="city" disabled={true} />
+                                    <label htmlFor="city">Cidade:</label>
+                                    <input
+                                        className="input-form"
+                                        type="text"
+                                        name="city"
+                                        id="city"
+                                        disabled={true}
+                                        value={cidade}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -196,8 +306,10 @@ export function Cart({ user }) {
                             </div>
 
                             <div>
-                                <button type="submit" id="continue-buying" className="continue-buying cursor-pointer">Continuar comprando</button>
-                                <button type="submit" id="finish" className="cursor-pointer btn">Finalizar a compra</button>
+                                <Link to="/">
+                                    <button type="submit" id="continue-buying" className="continue-buying cursor-pointer">Continuar comprando</button>
+                                </Link>
+                                <button onClick={() => finish()} disabled={endereco.length <= 0} type="submit" id="finish" className="cursor-pointer btn">Finalizar a compra</button>
                             </div>
                         </div>
                     </div>
