@@ -1,7 +1,7 @@
 import searchIcon from '../../assets/icons/search.png';
 import logoImg from '../../assets/logotypes/JMGames_White.png';
 import cartIcon from '../../assets/icons/cart.png';
-import pacmanImg from '../../assets/icons/pacman.png';
+import profile_icon from '../../assets/icons/sonicgi.png';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { RiLogoutCircleLine } from 'react-icons/ri';
@@ -30,7 +30,7 @@ export function Header(props) {
             </div>
 
             <div className="user flex-row">
-                <img id="avatar" src={props.user.avatar || pacmanImg} alt="Usuário" className="item-header" />
+                <img id="avatar" src={props.user.avatar || profile_icon} alt="Usuário" className="item-header" />
                 <div>
                     <p>Bem vindo(a) ,</p>
                     <p>{props.user.name}</p>
