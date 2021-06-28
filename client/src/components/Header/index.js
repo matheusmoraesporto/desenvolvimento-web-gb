@@ -1,7 +1,7 @@
 import searchIcon from '../../assets/icons/search.png';
 import logoImg from '../../assets/logotypes/JMGames_White.png';
 import cartIcon from '../../assets/icons/cart.png';
-import profile_icon from '../../assets/icons/sonicgi.png';
+import profile_icon from '../../assets/icons/sonic.png';
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { RiLogoutCircleLine } from 'react-icons/ri';
