@@ -9,7 +9,6 @@ projectId: "jmgames-189ce",
 storageBucket: "jmgames-189ce.appspot.com",
 messagingSenderId: "615226212299",
 appId: "1:615226212299:web:21a7a6d76ccb45b6a1c04e"
-
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -17,8 +16,6 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebaseApp.firestore();
 
 const firebaseData = {
-    firebaseConfig,
-
     googleLogin: async() => {
         const provider = new firebase.auth.GoogleAuthProvider();
         let result = await firebase.auth().signInWithPopup(provider);
@@ -26,5 +23,5 @@ const firebaseData = {
     }
 }
 
-export default firebaseData;
+export {firebaseData, firebaseApp};
 
