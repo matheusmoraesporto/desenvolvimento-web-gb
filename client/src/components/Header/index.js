@@ -6,8 +6,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import './styles.css';
 
-
-
 export function Header(props) {
     const history = useHistory();
 
@@ -15,7 +13,7 @@ export function Header(props) {
         localStorage.clear();
         history.go(0)
     };
-    
+
     return (
         <header className="flex-row">
             <Link to="/">
@@ -44,8 +42,8 @@ export function Header(props) {
                     <span id="cart-length" hidden></span>
                 </button>
             </Link>
-            
-            <button onClick={()=> logout()} id="btn-cart" className="cart cursor-pointer flex-row">
+
+            <button onClick={() => logout()} id="btn-cart" className="cart cursor-pointer flex-row">
                 <RiLogoutCircleLine className="logout" />
             </button>
         </header>

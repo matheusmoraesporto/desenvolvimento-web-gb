@@ -3,6 +3,7 @@ const router = express.Router();
 
 const User = require('../models/user');
 
+// Guarda no mongodb o usuário autenticado ou criado pelo firebase, se já existir, apenas retorna o mesmo.
 router.post('/auth', async (req, res) => {
     try {
         const { user } = req.body;

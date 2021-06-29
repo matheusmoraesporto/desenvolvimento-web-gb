@@ -5,6 +5,7 @@ const Cart = require('../models/cart');
 const Order = require('../models/order');
 const Product = require('../models/product');
 
+// Obtém os produtos que estão no carrinho do usuário.
 const getProductsInCart = async (idUser) => {
     const cartItens = await Cart
         .find()
@@ -34,6 +35,7 @@ const getProductsInCart = async (idUser) => {
     return productsCart;
 };
 
+// Lista os produtos para compra e obtém também os produtos que estão no carrinho do usuário.
 router.get('/home', async (req, res) => {
     try {
         const { idUser } = req.query;
@@ -54,6 +56,7 @@ router.get('/home', async (req, res) => {
     }
 });
 
+// Adiciona no carrinho o produto.
 router.post('/add', async (req, res) => {
     try {
         let retorno;
@@ -81,9 +84,7 @@ router.post('/add', async (req, res) => {
             .find()
             .where('idUser').equals(idUser);
 
-        res.json({
-            cart: retorno
-        });
+        res.json({ cart: retorno });
     }
     catch (err) {
         console.log(err);
@@ -91,7 +92,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-
+// Lista os itens que estão no carrinho do usuário.
 router.get('/cart', async (req, res) => {
     try {
         const { idUser } = req.query;
@@ -106,6 +107,7 @@ router.get('/cart', async (req, res) => {
     }
 });
 
+// Remove o item do carrinho do usuário.
 router.post('/remove', async (req, res) => {
     try {
         const { idUser, idProduct } = req.body.params;
@@ -122,7 +124,6 @@ router.post('/remove', async (req, res) => {
         const productsCart = await getProductsInCart(idUser);
 
         res.json({ products: productsCart });
-
     }
     catch (err) {
         console.log(err);
@@ -130,6 +131,7 @@ router.post('/remove', async (req, res) => {
     }
 });
 
+// Finaliza o pedido com os itens que estão no carrinho do usuário.
 router.post('/finish', async (req, res) => {
     try {
         const { idUser, total } = req.body.params;
@@ -140,6 +142,7 @@ router.post('/finish', async (req, res) => {
 
         itensInCart.forEach(i => i.remove());
 
+        // Cria o boleto "fake"
         let bankSlip = '';
 
         for (let index = 0; index < 48; index++) {
@@ -164,6 +167,7 @@ router.post('/finish', async (req, res) => {
     }
 });
 
+// Obtém o último pedido que o usuário finalizou, pois no sistema só possível acessar essas entidades, quando o usuário finaliza o pedido, não é possível obter um histórico.
 router.get('/order', async (req, res) => {
     try {
         const { idUser } = req.query;
