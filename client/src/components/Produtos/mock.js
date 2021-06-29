@@ -13,7 +13,7 @@ let tiposProduto = [
     },
     {
         description: 'Jogos',
-        type: 'jogos',
+        type: 'Jogo',
         id: 3,
         checked: false
     }

@@ -12,7 +12,7 @@ export function Header(props) {
 
     const logout = () => {
         localStorage.clear();
-        history.go(0)
+        history.go(0);
     };
 
     return (

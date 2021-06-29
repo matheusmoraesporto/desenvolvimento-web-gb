@@ -18,7 +18,7 @@ export default ({ onReceiveGoogle, email, setEmail, password, setPassword, handl
         } else {
             alert('Error');
         }
-    }
+    };
 
     return (
         <BrowserRouter>
@@ -44,7 +44,7 @@ export default ({ onReceiveGoogle, email, setEmail, password, setPassword, handl
                             </form>
 
                             <button onClick={() => handleSignUp()} className="button-config" id="enter">
-                                <p id="text-button">C R E A T E </p>
+                                <p id="text-button">C R E A T E</p>
                                 <IoGameController />
                             </button>
 
@@ -91,7 +91,7 @@ export default ({ onReceiveGoogle, email, setEmail, password, setPassword, handl
                             </form>
 
                             <button onClick={() => handleLogin()} className="button-config" id="enter">
-                                <p id="text-button">S T A R T </p>
+                                <p id="text-button">S T A R T</p>
                                 <IoGameController />
                             </button>
 

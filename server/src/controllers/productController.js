@@ -44,11 +44,7 @@ router.get('/home', async (req, res) => {
             .find()
             .sort({ value: -1 });
 
-        const cart = await Cart
-            .find()
-            .where('idUser').equals(idUser);
-
-        return res.json({ products, cart });
+        return res.json({ products });
     }
     catch (err) {
         console.log(err);

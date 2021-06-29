@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import api from '../service/api';
-import apiCorreios from '../service/api-correio';
+import apiCep from '../service/api-cep';
 import boletoImg from '../../assets/icons/boleto.png';
 import cashImg from '../../assets/icons/cash.png';
 import locationImg from '../../assets/icons/location.png';
@@ -61,7 +61,7 @@ export function Cart({ user }) {
 
     const getCep = async (cep) => {
         if (cep) {
-            const response = await apiCorreios.get(`/${cep}/json/`);
+            const response = await apiCep.get(`/${cep}/json/`);
             const { data } = response;
 
             if (!data.erro) {

@@ -5,11 +5,11 @@ import filters from './mock';
 import './styles.css';
 
 export function Produtos({ user }) {
+    // Guarda os estados dos filtros e também uma lista com todos os produtos e outra com os produtos de acordo com o filtro, para que não precise fazer buscas no backend.
     const [filtersBranch, setFiltersBranch] = useState([]);
     const [filtersType, setFiltersType] = useState([]);
     const [products, setProducts] = useState([]);
     const [productsList, setProductsList] = useState([]);
-    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         async function loadProducts() {
@@ -19,11 +19,10 @@ export function Produtos({ user }) {
                 }
             });
 
-            const { products, cart } = response.data;
+            const { products } = response.data;
 
             setProducts(products);
             setProductsList(products);
-            setCart(cart);
         }
 
         loadProducts();
@@ -73,9 +72,7 @@ export function Produtos({ user }) {
             quantity: 1
         };
 
-        const newCart = await api.post('/product/add', { product });
-
-        setCart(newCart);
+        await api.post('/product/add', { product });
     }
 
     return (

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const apiCorreios = axios.create({
+const apiCep = axios.create({
     baseURL: 'http://viacep.com.br/ws'
 });
 
-export default apiCorreios;
+export default apiCep;
